@@ -164,6 +164,8 @@ class ExtraPackage
      */
     public function mergeInto(RootPackageInterface $root, PluginState $state)
     {
+        $this->updateMinimumStability($root);
+
         $this->prependRepositories($root);
 
         $this->mergeRequires('require', $root, $state);
@@ -200,6 +202,20 @@ class ExtraPackage
         $this->mergeAutoload('devAutoload', $root);
         $this->mergeReferences($root);
         $this->mergeAliases($root);
+    }
+
+    /**
+     * update the minimum-stability
+     * @param RootPackageInterface $root
+     */
+    protected function updateMinimumStability(RootPackageInterface $root)
+    {
+        if (!isset($this->json['minimum-stability'])) {
+            return;
+        }
+
+        $unwrapped = self::unwrapIfNeeded($root, 'setMinimumStability');
+        $unwrapped->setMinimumStability(VersionParser::normalizeStability($this->json['minimum-stability']));
     }
 
     /**

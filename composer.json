@@ -1,6 +1,7 @@
 {
     "name": "wikimedia/composer-merge-plugin",
     "description": "Composer plugin to merge multiple composer.json files",
+    "version": "v2.0.0-p1",
     "type": "composer-plugin",
     "license": "MIT",
     "authors": [
